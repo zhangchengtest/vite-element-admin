@@ -35,7 +35,6 @@ export default defineConfig( ( { command, mode } ) => {
           target: VITE_PROXY_DOMAIN_REAL,
           ws: false,
           changeOrigin: true,
-          rewrite: (path) => regExps(path, VITE_PROXY_DOMAIN)
         }
       }
     },

@@ -2,7 +2,7 @@ import http from '/@/utils/request'
 
 export function queryPuzzle() {
   return http.request( {
-    url : '/api/game/queryPuzzle',
+    url : '/game/queryPuzzle',
     method : 'get'
   } )
 }

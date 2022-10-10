@@ -15,7 +15,7 @@ export const GLOBAL_DATA = {
     baseUrl : '/api'
   },
   pro : {
-    baseUrl : '/api'
+    baseUrl : 'http://api.punengshuo.com/api'
   }
 }
 

@@ -160,7 +160,6 @@ class HttpRequest {
             return result
           }
         }
-
         return result
       },
       error => {

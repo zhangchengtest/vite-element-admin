@@ -40,6 +40,15 @@ export const constantRoutes = [
     }
   },
   {
+    path : '/game',
+    name : 'Game',
+    component : () => import( '/@/views/game/index.vue' ),
+    meta : {
+      hidden : true,
+      title : '游戏'
+    }
+  },
+  {
     path : '/404',
     name : 'Error404',
     component : () => import( '/@/views/error/404.vue' ),

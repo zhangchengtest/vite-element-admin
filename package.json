@@ -5,7 +5,7 @@
   "description": "vite-element-admin",
   "scripts": {
     "dev": "cross-env --max_old_space_size=4096 vite",
-    "build": "rimraf dist && cross-env vite build",
+    "build": "rimraf dist && cross-env --max_old_space_size=4096 vite build",
     "build:staging": "rimraf dist && cross-env vite build --mode staging",
     "report": "rimraf dist && cross-env vite build",
     "vis": "set vis=true && vite build",

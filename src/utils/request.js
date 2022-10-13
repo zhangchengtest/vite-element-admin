@@ -35,22 +35,21 @@ class HttpRequest {
     const config = {
       baseURL : this.baseUrl,
       timeout : this.timeout,
-      withCredentials : this.withCredentials,
-      headers : {
-        'Content-Type' : 'application/json;charset=UTF-8'
-      }
+      withCredentials : this.withCredentials
     }
     return config
   }
 
   getParams( payload ) {
-    const { method, data } = payload
-    if ( ['post', 'put', 'patch', 'delete'].indexOf( method ) >= 0 ) {
-      payload.data = data
-    } else {
-      payload.params = data
-      delete payload.data
-    }
+    // console.log( payload )
+    // const { method, data } = payload
+    // if ( ['post', 'put', 'patch', 'delete'].indexOf( method ) >= 0 ) {
+    //   payload.data = data
+    // } else {
+    //   payload.params = data
+    //   delete payload.data
+    // }
+    // console.log( payload )
     return payload
   }
 
@@ -120,6 +119,20 @@ class HttpRequest {
         }
         config.data = qs.stringify( config.data )
 
+        // 设置请求数据格式
+        // config.headers['Content-Type'] = config.headers['Content-Type'] || 'application/json;charset=UTF-8'
+
+        if ( config.method === 'post' ) {
+          // 如果为post请求，要求Content-Type为json时，数据需要转换成JSON字符串
+          if ( config.headers['Content-Type'] === 'application/json;charset=UTF-8' ) {
+            config.data = JSON.stringify( config.data )
+          } else {
+            // 如果是FormData参数据不需要qs序列化处理，否则默认Content-Type数据格式都需要qs序列化处理
+            if ( !( config.data instanceof FormData ) ) {
+              config.data = qs.stringify( config.data )
+            }
+          }
+        }
         return config
       },
       error => {
@@ -146,9 +159,9 @@ class HttpRequest {
           const userStore = useUserStore()
 
           if ( isErrorToken ) {
-            userStore.LOGIN_OUT()
-            router.push( '/login' )
-            window.location.reload()
+            // userStore.LOGIN_OUT()
+            // router.push( '/login' )
+            // window.location.reload()
           } else if ( !isWhiteCode ) {
             ElMessage( {
               message : message || 'Error',

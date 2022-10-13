@@ -49,6 +49,15 @@ export const constantRoutes = [
     }
   },
   {
+    path : '/puzzle',
+    name : 'Puzzle',
+    component : () => import( '/@/views/puzzle/index.vue' ),
+    meta : {
+      hidden : true,
+      title : '拼图'
+    }
+  },
+  {
     path : '/404',
     name : 'Error404',
     component : () => import( '/@/views/error/404.vue' ),
@@ -332,6 +341,7 @@ const router = createRouter( {
 
 export function resetRouter() {
   const WHITE_NAME_LIST = ['Login']
+  console.log( 'reset' )
   router.getRoutes().forEach( route => {
     const { name } = route
     if ( name && !WHITE_NAME_LIST.includes( name ) ) {

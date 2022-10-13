@@ -1,13 +1,13 @@
 import { reactive, toRefs } from 'vue'
 
-export default function useCreateGame( level, diffec, gameEndCallback ) {
-  const state = reactive( {
+export default function useCreateGame( orders, level, diffec, gameEndCallback ) {
+  const state = {
     arr : [],
     diffec
-  } )
+  }
   let startX = level - 1
   let startY = level - 1
-  state.arr = creatArr( level )
+  state.arr = creatArr2( level, orders )
   // 创建数组
   function creatArr( level ) {
     const arr = []
@@ -21,8 +21,28 @@ export default function useCreateGame( level, diffec, gameEndCallback ) {
         lin = []
       }
     }
-    arr[level - 1][level - 1] = 0
+    // arr[level - 1][level - 1] = 0
+    console.log( arr )
+    return arr
+  }
 
+  // 创建数组
+  function creatArr2( level, orders ) {
+    const arr = []
+    let lin = []
+    const levels = level * level + 1
+
+    for ( let i = 1; i < levels; i++ ) {
+      lin.push( i )
+      if ( lin.length === level ) {
+        arr.push( lin )
+        lin = []
+      }
+    }
+    // arr[level - 1][level - 1] = 0
+    console.log( 'ssss' )
+    console.log( arr )
+    console.log( orders )
     return arr
   }
 
@@ -103,25 +123,8 @@ export default function useCreateGame( level, diffec, gameEndCallback ) {
     }
   }
 
-  function shouldMove( x, y ) {
-    //   判断向哪移动
-    const { emptyX, emptyY } = seekEmpty()
-    if ( x === emptyX && y !== emptyY && Math.abs( y - emptyY ) === 1 ) {
-      // 说明在一个水平线上 可能是左右移动
-      if ( y > emptyY ) {
-        moveLeft( x, y )
-      } else {
-        moveRight( x, y )
-      }
-    }
-    if ( y === emptyY && x !== emptyX && Math.abs( x - emptyX ) === 1 ) {
-      // 说明需要上下移动
-      if ( x > emptyX ) {
-        moveTop( x, y )
-      } else {
-        moveDown( x, y )
-      }
-    }
+  function shouldMove( x, y, moveX, moveY ) {
+    move( x, y, moveX, moveY )
     gameEnd()
   }
   // 随机打乱

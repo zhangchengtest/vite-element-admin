@@ -1,7 +1,7 @@
 <template>
   <div class="_game">
     <div class="gameMain" :style="{ backgroundColor: gamedata.style.gameBoxBg }">
-      <div class="y-axis " :class="emptyNum === index ? 'empty' : ''" v-for="(item, index) in gameArr" :key="item">
+      <div class="y-axis" :class="emptyNum === index ? 'empty' : ''" v-for="(item, index) in gameArr" :key="item">
         <div
           class="x-axis"
           :class="item2 === 0 ? 'empty' : ''"
@@ -13,7 +13,13 @@
           v-for="(item2, index2) in item"
           :key="index2"
         >
-          <img :src="gamedata.imgs[item2 - 1]" v-if="gamedata.mode === 'img' && item2 != 0" alt="" :showx="index" :showy="index2" />
+          <img
+            :src="gamedata.imgs[item2 - 1]"
+            v-if="gamedata.mode === 'img' && item2 != 0"
+            alt=""
+            :showx="index"
+            :showy="index2"
+          />
           <span v-else-if="item2 != 0">
             {{ item2 }}
           </span>
@@ -55,25 +61,22 @@ export default {
           constrainDimensions : true
         }
       } )
-      swappable.on( 'drag:start', () => {
-      } )
-      swappable.on( 'swappable:swapped', ( event ) => {
+      swappable.on( 'drag:start', () => {} )
+      swappable.on( 'swappable:swapped', event => {
         // console.log( event.data.dragEvent.source.currentSrc )
-
         // // console.log( event.swappedElement.currentSrc )
         // var x2 = event.swappedElement.getAttribute( 'showx' )
         // var y2 = event.swappedElement.getAttribute( 'showy' )
         // a.value = x2
         // b.value = y2
       } )
-      swappable.on( 'drag:stop', ( event ) => {
+      swappable.on( 'drag:stop', event => {
         emit( 'shouldMoveCallback' )
         // console.log( event )
         // console.log( event.data.source.currentSrc )
         // shouldMove()
       } )
-      swappable.on( 'drag:move', () => {
-      } )
+      swappable.on( 'drag:move', () => {} )
     } )
 
     return {

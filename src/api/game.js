@@ -11,6 +11,6 @@ export function queryPuzzleByUrl( data ) {
   return http.request( {
     url : '/game/queryPuzzleByUrl',
     method : 'get',
-    params : { 'url' : data }
+    params : { url : data }
   } )
 }

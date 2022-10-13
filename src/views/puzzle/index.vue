@@ -8,7 +8,13 @@
   </div>
   <div class="main">
     <!-- 游戏 -->
-    <num-game :gamedata="state.gamedata"  :gameArr="state.arrdata" ref="game" @endCallback="endCallback" @shouldMoveCallback="shouldMoveCallback"></num-game>
+    <num-game
+      :gamedata="state.gamedata"
+      :gameArr="state.arrdata"
+      ref="game"
+      @endCallback="endCallback"
+      @shouldMoveCallback="shouldMoveCallback"
+    ></num-game>
   </div>
 
   <div class="todos">
@@ -59,7 +65,7 @@ const getList = async() => {
   }, 1.5 * 1000 )
 }
 
-const getListByUrl = async( url ) => {
+const getListByUrl = async url => {
   listLoading.value = true
   const { data } = await queryPuzzleByUrl( url )
 
@@ -106,7 +112,9 @@ const shouldMoveCallback = () => {
     if ( arr[i].getAttribute( 'class' ) && arr[i].getAttribute( 'class' ).includes( 'draggable-mirror' ) ) {
     } else if ( arr[i].getAttribute( 'class' ) && arr[i].getAttribute( 'class' ).includes( 'draggable--original' ) ) {
     } else {
-      var s = arr[i].getAttribute( 'src' ).substring( len( arr[i].getAttribute( 'src' ) ) - 5, len( arr[i].getAttribute( 'src' ) ) - 4 )
+      var s = arr[i]
+        .getAttribute( 'src' )
+        .substring( len( arr[i].getAttribute( 'src' ) ) - 5, len( arr[i].getAttribute( 'src' ) ) - 4 )
 
       result = result + ',' + s
     }
@@ -178,7 +186,6 @@ const state = reactive( {
 const start = () => {
   getListByUrl( url.value )
 }
-
 </script>
 
 <style lang="scss">

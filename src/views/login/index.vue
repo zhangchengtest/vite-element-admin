@@ -1,119 +1,114 @@
+
 <template>
-  <div class="section-container login-container un-select">
-    <div class="body fix-width">
-      <div class="top">
-        <logo class="logos" />
-        <div class="top-title">账号密码登录</div>
-      </div>
-      <div class="main">
-        <login-pwd />
-        <div class="foot-link clearFix" />
-        <div v-if="isShowWX" class="foot-link">
-          <el-divider content-position="center">其他方式登录</el-divider>
-          <we-chat-login />
-        </div>
-      </div>
-    </div>
-    <yu-copyright />
-  </div>
-</template>
+  <div>
+                <el-container>
+     <el-header style="text-align: center; font-size: 16px">
+          <div style="margin-top:20px;">Welcome to Puzzle Game !</div>
+     </el-header>
 
-<script setup>
-import { ref, onBeforeMount, onMounted, onUnmounted } from 'vue'
-import { isMobile } from '/@/utils/device'
-import { debounce } from 'lodash-unified'
+     <el-main>
+        <el-row :gutter="20">
+        <el-col :span="6">
+         <div class="grid-content"></div>
+         </el-col>
 
-import YuCopyright from '/@/components/YuCopyright'
-import Logo from './components/logo.vue'
-import WeChatLogin from './components/weChatLogin'
-import LoginPwd from './loginPwd.vue'
+            <el-col :span="12">
+                <el-input v-model="username" placeholder="用户名"></el-input>
+           </el-col>
+            <el-col :span="6">
+         <div class="grid-content"></div>
+         </el-col>
+       </el-row>
 
-const isShowWX = ref( true )
+       <div style="margin: 30px 20px;"></div>
+       <el-row :gutter="20">
+        <el-col :span="6">
+         <div class="grid-content"></div>
+         </el-col>
+         <el-col :span="12" style="text-align: center;line-height:40px">
+               <el-button type="primary" @click="login" style="width:100%">进入</el-button>
+           </el-col>
 
-const resizeCb = debounce( () => {
-  isShowWX.value = !isMobile()
-}, 50 )
+            <el-col :span="6">
+         <div class="grid-content"></div>
+         </el-col>
+       </el-row>
 
-onBeforeMount( () => {
-  isShowWX.value = !isMobile()
-} )
+     </el-main>
+   </el-container>
+           </div>
+ </template>
 
-onMounted( () => {
-  window.addEventListener( 'resize', resizeCb )
-} )
+<script>
 
-onUnmounted( () => {
-  window.removeEventListener( 'resize', resizeCb )
-} )
+import { ref, onBeforeMount, reactive, computed } from 'vue'
+import { useUserStore } from '/@/store'
 
-defineOptions( {
-  name : 'Login'
-} )
+const userStore = useUserStore()
+const loading = ref( false )
+
+export default {
+  name : 'Login',
+
+  created() {
+    this.flush()
+  },
+  data() {
+    return {
+      isLoging : false,
+      captcha_url : '',
+      validateCodeToken : '',
+      pwd : '',
+      username : ''
+
+    }
+  },
+  components : {
+
+  },
+  methods : {
+
+    // 登录逻辑
+    login() {
+      if ( this.username == '' ) {
+        this.$message( {
+          message : '用户名未填写',
+          type : 'warning'
+        } )
+      } else {
+        this.toLogin()
+      }
+    },
+
+    toLogin() {
+      loading.value = true
+      try {
+        userStore.SET_TOKEN( this.username )
+        this.$router.push( '/puzzle/index' )
+      } catch ( e ) {
+      } finally {
+        loading.value = false
+      }
+    },
+
+    goRegister() {
+      this.$router.push( '/register' )
+    },
+
+    goForget() {
+      this.$router.push( '/forgetPassword' )
+    },
+
+    flush() {
+      this.validateCodeToken = new Date().getTime()
+      this.captcha_url = 'api/captchaCode/' + this.validateCodeToken
+    }
+
+  }
+}
 </script>
 
-<style lang="scss" scoped>
-.login-container {
-  width: 100%;
-  min-height: 100vh;
-  padding: 15vh 0 100px;
-  position: relative;
-  background: #fff;
-}
-.body {
-  padding: 30px 40px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  border: 1px solid #e6ebf5;
-  background-color: #fff;
-  vertical-align: middle;
-  min-width: 260px;
-  width: 380px;
-  margin: 0 auto;
-}
+ <style lang="css" scoped>
 
-.logos {
-  margin: 0 auto 20px;
-}
-.top-title {
-  color: rgba(16, 16, 16, 1);
-  font-size: 20px;
-  height: 29px;
-  line-height: 29px;
-  text-align: center;
-}
-.main {
-  margin-top: 20px;
-  .foot-link {
-    text-align: center;
-    margin-top: 1px;
-    .link-item {
-      margin: 0;
-      font-size: 12px;
-      line-height: 18px;
-      color: #1890ff;
-    }
-  }
-}
+ </style>
 
-.foot-link {
-  .el-button {
-    font-size: 12px;
-  }
-}
-
-// 适配移动端
-@media screen and (max-width: 768px) {
-  .body {
-    padding: 0 30px;
-    box-shadow: none;
-    border: 0;
-    background: transparent;
-    border-radius: 0;
-  }
-  .w380 {
-    margin: 0 auto;
-    width: 100vw;
-    min-width: 100vw;
-  }
-}
-</style>

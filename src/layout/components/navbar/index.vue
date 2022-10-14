@@ -1,33 +1,10 @@
 <template>
   <div class="navbar" :class="set.layoutMod + '-nav-section'">
-    <div v-if="set.layoutMod === 'horizontal'" class="horizontal-sidebar-container">
-      <Logo :class="set.layoutMod + '-logo'" :collapse="set.isCollapse" />
-      <MenuBar />
-    </div>
-
-    <HamBurger
-      v-if="set.layoutMod === 'vertical'"
-      id="hamburger-container"
-      :is-active="set.sidebar.opened"
-      class="hamburger-container"
-      @toggle-click="toggleSideBar"
-    />
-    <BreadCrumb v-if="set.layoutMod === 'vertical'" id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu" :class="{ mobile: set.device === 'mobile' }">
-      <HeaderSearch id="header-search" class="p8" v-if="set.device !== 'mobile'" />
 
-      <ScreenFull id="screenfull" class="p8 hover-effect" />
-
-      <el-tooltip content="全局size设置" effect="dark" placement="bottom">
-        <size-select id="size-select" class="p8 hover-effect" />
-      </el-tooltip>
-
-      <LangSelect class="p8 hover-effect" />
-
-      <el-dropdown class="p8 avatar-container right-menu-item hover-effect" trigger="click">
+      <el-dropdown class="p8 avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="set.avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
 
           <div class="username">
             {{ set.userName }}
@@ -39,30 +16,13 @@
 
         <template #dropdown>
           <el-dropdown-menu>
-            <router-link to="/user/index">
-              <el-dropdown-item>个人中心</el-dropdown-item>
-            </router-link>
-            <router-link to="/">
-              <el-dropdown-item>首 页</el-dropdown-item>
-            </router-link>
-            <a target="_blank" href="https://github.com/mvpyb">
-              <el-dropdown-item>Github</el-dropdown-item>
-            </a>
-            <a target="_blank" href="https://gitee.com/simmon_page">
-              <el-dropdown-item>码 云</el-dropdown-item>
-            </a>
-            <el-dropdown-item divided @click="logout">
+            <el-dropdown-item @click="logout">
               <span style="display: block">登 出</span>
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
 
-      <div class="p8 el-icon-setting hover-effect" @click="openSettings">
-        <el-icon class="setting">
-          <Setting />
-        </el-icon>
-      </div>
     </div>
   </div>
 </template>
@@ -200,6 +160,7 @@ defineOptions( {
 
     .avatar-container {
       margin-right: 30px;
+      margin-top: 15px;
 
       .avatar-wrapper {
         vertical-align: middle;

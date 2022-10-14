@@ -117,11 +117,9 @@ class HttpRequest {
         if ( token ) {
           config.headers.Authorization = token
         }
-        config.data = qs.stringify( config.data )
 
         // 设置请求数据格式
         // config.headers['Content-Type'] = config.headers['Content-Type'] || 'application/json;charset=UTF-8'
-
         if ( config.method === 'post' ) {
           // 如果为post请求，要求Content-Type为json时，数据需要转换成JSON字符串
           if ( config.headers['Content-Type'] === 'application/json;charset=UTF-8' ) {

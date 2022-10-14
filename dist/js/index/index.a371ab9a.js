@@ -1,0 +1,1 @@
+import{F as s,o as a,c as o,a4 as c}from"../@vue/@vue.2b452c3d.js";const _={class:"link--mallki",href:"#"},l=s({name:"YuTextHover"}),t=Object.assign(l,{props:{className:{type:String,default:""},text:{type:String,default:"\u6392\u884C"}},setup(e){const n=e;return(r,i)=>(a(),o("a",_,c(n.text),1))}}),m=Object.assign(t,{install(e){e.component(t.name,t)}});export{m as T};

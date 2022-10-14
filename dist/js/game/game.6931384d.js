@@ -1,1 +1,0 @@
-import{h as e}from"../../assets/index.ab6c54a2.js";function t(){return e.request({url:"/game/queryPuzzle",method:"get"})}function l(r){return e.request({url:"/game/queryPuzzleByUrl",method:"get",params:{url:r}})}export{l as a,t as q};

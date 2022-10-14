@@ -55,7 +55,7 @@ defineOptions( {
   width: 100%;
   position: relative;
   overflow: hidden;
-  background: #f0f2f5;
+  background: #fff;
 }
 .fixed-header + .app-main {
   padding-top: 50px;
@@ -65,7 +65,7 @@ defineOptions( {
     min-height: calc(100vh - 84px);
   }
   .fixed-header + .app-main {
-    padding-top: 84px;
+    // padding-top: 84px;
   }
 }
 </style>

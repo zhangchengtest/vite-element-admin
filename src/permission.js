@@ -5,7 +5,7 @@ import getPageTitle from '/@/utils/getPageTitle'
 import { useUserStore, usePermissionStore } from '/@/store'
 import NProgress from '/@/utils/progress'
 
-const whiteList = ['/login', '/puzzle']
+const whiteList = ['/login']
 router.beforeEach( async( to, from, next ) => {
   NProgress.start()
   document.title = getPageTitle( to.meta?.title )
@@ -13,6 +13,7 @@ router.beforeEach( async( to, from, next ) => {
   const userStore = useUserStore()
   const permissionStore = usePermissionStore()
   if ( hasToken && hasToken !== 'undefined' ) {
+    console.log( 'ssa' )
     if ( to.path === '/login' ) {
       next( { path : '/' } )
       NProgress.done()

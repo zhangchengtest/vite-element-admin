@@ -1,8 +1,6 @@
 <template>
-  <a :class="props.className" class="link--mallki" href="#">
+  <a class="link--mallki" href="#">
     {{ props.text }}
-    <span :data-letters="props.text" />
-    <span :data-letters="props.text" />
   </a>
 </template>
 
@@ -14,7 +12,7 @@ const props = defineProps( {
   },
   text : {
     type : String,
-    default : 'Vite Element Admin'
+    default : '排行'
   }
 } )
 
@@ -28,7 +26,7 @@ defineOptions( {
 
 .link--mallki {
   font-weight: 800;
-  color: #4dd9d5;
+  /* color: #4dd9d5; */
   font-family: 'Dosis', sans-serif;
   -webkit-transition: color 0.5s 0.25s;
   transition: color 0.5s 0.25s;

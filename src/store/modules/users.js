@@ -12,7 +12,7 @@ const useUserStore = defineStore( {
       token : cookies.get( TOKEN ),
       uid : '9527',
       avatar : AVATAR,
-      name : '灰是小灰灰的灰',
+      name : cookies.get( TOKEN ),
       phone : '15988888888',
       email : '454539387@qq.com',
       identity : '',
@@ -30,9 +30,9 @@ const useUserStore = defineStore( {
         if ( code == 200 ) {
           const { id, name, avatar, roles, phone, email, identity } = data
           this.uid = id || '9527'
-          this.name = name || ''
           this.phone = phone || ''
           this.email = email || ''
+          this.name = cookies.get( TOKEN )
           this.identity = identity || ''
           this.avatar = avatar || AVATAR
           this.roles = roles || ['editor']
@@ -48,17 +48,7 @@ const useUserStore = defineStore( {
     },
     async LOGIN_OUT() {
       try {
-        const { code } = await logout( this.token )
-        if ( code == 200 ) {
-          this.token = ''
-          this.name = ''
-          this.avatar = ''
-          this.phone = ''
-          this.email = ''
-          this.identity = ''
-          this.roles = []
-          this.RESET_INFO()
-        }
+        this.RESET_INFO()
       } catch ( error ) {
         return error
       }

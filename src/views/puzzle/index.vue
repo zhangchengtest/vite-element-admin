@@ -1,10 +1,9 @@
-<template>
+ <template >
   <div class="diffec">
-    <h2>
-      {{ state.gamedata.difficulty }}
-
-      <p class="tip">{{ state.msg }}</p>
-    </h2>
+    <div class="difftodo">
+      <div class="to" @click="changeDiff('add')"><Time :time="time" ref="headerChild"></Time></div>
+      <div class="to" @click="changeDiff('del')">步数：{{ cal }}</div>
+    </div>
   </div>
   <div class="main">
     <!-- 游戏 -->
@@ -18,21 +17,42 @@
   </div>
 
   <div class="todos">
+    <div class="change" @click="refresh">刷新</div>
     <div class="start" @click="start">{{ state.btnName }}</div>
+  </div>
+  <div class="diffec">
+    <h2>
+      <p class="tip">{{ state.msg }}</p>
+    </h2>
+  </div>
+  <div class="main">
+  <!-- <BoxCard :ranks="state.myrank" /> -->
+  <TransactionTable :ranks="state.myrank" />
   </div>
 </template>
 
 <script setup>
+import BoxCard from './components/BoxCard'
+import TransactionTable from './components/TransactionTable.vue'
 import { computed, reactive, ref } from 'vue'
 import NumGame from './components/NumGame.vue'
-import { queryPuzzle, queryPuzzleByUrl } from '/@/api/game'
+import Time from './components/Time.vue'
+import { queryPuzzle, queryPuzzleByUrl, savePuzzleRank, queryPuzzleRank } from '/@/api/game'
+
+import { useUserStore } from '/@/store'
+const userStore = useUserStore()
+
+// userStore.RESET_INFO()
 
 const game = ref()
+const headerChild = ref()
 
 const list = ref( null )
 const url = ref( null )
 const orders = ref( null )
 const myarr = ref( null )
+const myranks = ref( null )
+const cal = ref( 0 )
 const listLoading = ref( true )
 
 function creatArr2( level, orders ) {
@@ -59,10 +79,27 @@ const getList = async() => {
   orders.value = data.orders
 
   myarr.value = creatArr2( 3, data.orders )
+  getRanks( data.url )
 
   setTimeout( () => {
     listLoading.value = false
   }, 1.5 * 1000 )
+}
+
+const getRanks = async url => {
+  listLoading.value = true
+  const { data } = await queryPuzzleRank( url )
+
+  myranks.value = data
+
+  setTimeout( () => {
+    listLoading.value = false
+  }, 1.5 * 1000 )
+}
+
+const saveRanks = async data => {
+  await savePuzzleRank( data )
+  getRanks( url.value )
 }
 
 const getListByUrl = async url => {
@@ -101,11 +138,14 @@ const isStart = ref( false )
 
 const endCallback = () => {
   // 通关了
-  state.msg = '欧耶!我通关了'
+  state.msg = '欧耶!我过关了'
+  headerChild.value.stop()
 }
 
 const shouldMoveCallback = () => {
   // shouldMove( x, y, x2, y2 )
+  if ( !isStart.value ) return
+  cal.value = cal.value + 1
   var arr = document.querySelectorAll( 'img' )
   var result = ''
   for ( var i = 0; i < arr.length; i++ ) {
@@ -130,6 +170,7 @@ function len( str ) {
 function gameEnd( result ) {
   const target = creatArr( 3 ).toString()
   if ( result === target ) {
+    saveRanks( { 'spendTime' : headerChild.value.seconds, 'step' : cal.value, 'username' : userStore.name, 'url' : url.value } )
     setTimeout( () => {
       endCallback( true )
     }, 100 )
@@ -155,6 +196,27 @@ function creatArr( level ) {
 const state = reactive( {
   btnName : '开始游戏',
   msg : '',
+  myrank : computed( () => {
+    const statusMap = {
+      1 : 'danger',
+      2 : 'warning',
+      3 : 'success'
+    }
+    if ( myranks.value && myranks.value.length > 0 ) {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      myranks.value = myranks.value.map( item => {
+        return {
+          ...item,
+          statusStr : statusMap[item.sort]
+        }
+      } )
+    } else {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      myranks.value = []
+    }
+
+    return myranks.value
+  } ),
   arrdata : computed( () => {
     return myarr.value
   } ),
@@ -184,7 +246,13 @@ const state = reactive( {
 } )
 
 const start = () => {
+  isStart.value = true
   getListByUrl( url.value )
+  headerChild.value.start()
+}
+
+const refresh = () => {
+  location.reload()
 }
 </script>
 
@@ -235,15 +303,30 @@ const start = () => {
   width: 300px;
   height: 300px;
   margin: auto;
-  padding-top: 5vh;
+  padding-top: 10px;
 }
 .todos {
   display: flex;
-  padding-top: 50px;
-  justify-content: center;
+  padding-top: 20px;
+   width: 300px;
+   margin: auto;
+  justify-content: space-between;
+  font-size: 12px;
+  .change {
+    width: 60px;
+    height: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background: #5a009b;
+    cursor: pointer;
+    user-select: none;
+  }
   .start {
-    width: 120px;
-    height: 40px;
+    width: 80px;
+    height: 30px;
     border-radius: 20px;
     display: flex;
     justify-content: center;

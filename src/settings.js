@@ -1,5 +1,5 @@
 const defaultSetting = {
-  title : 'Vite Element Admin',
+  title : '拼图游戏',
   showSettings : true,
   tagsView : true,
   fixedHeader : true,

@@ -49,15 +49,6 @@ export const constantRoutes = [
     }
   },
   {
-    path : '/puzzle',
-    name : 'Puzzle',
-    component : () => import( '/@/views/puzzle/index.vue' ),
-    meta : {
-      hidden : true,
-      title : '拼图'
-    }
-  },
-  {
     path : '/404',
     name : 'Error404',
     component : () => import( '/@/views/error/404.vue' ),
@@ -106,6 +97,22 @@ export const asyncRoutes = [
           noCache : true,
           affix : true
         }
+      }
+    ]
+  },
+  {
+    path : '/puzzle',
+    name : 'Puzzle',
+    component : Layout,
+    meta : {
+      title : '拼图'
+    },
+    children : [
+      {
+        path : 'index',
+        component : () => import( '/@/views/puzzle/index.vue' ),
+        name : 'Puzzles',
+        meta : { title : '图标', icon : 'image', noCache : true }
       }
     ]
   },

@@ -1,6 +1,5 @@
 <template>
-  <div class="section-container login-container un-select">
-  </div>
+  <div class="section-container login-container un-select"></div>
 </template>
 
 <script setup>
@@ -38,31 +37,33 @@ defineOptions( {
   name : 'LoginToken'
 } )
 NProgress.start()
-client.connect().then( () => {
-  // Connected. Login now.
-  console.log( route.query.token )
-  var tt = route.query.token
-  tt = tt.replace( / /g, '+' )
-  // var tt = 'w3/q/jzpVY62GZhjFAABAAEAmTyr6hf0r9E+A7KP+Ep7l36g5qwgi9qJdOC85l66dzA='
-  return client.loginToken( tt )
-} ).then( ( ctrl ) => {
-  console.log( ctrl )
-  // // Logged in fine, attach callbacks, subscribe to 'me'.
-  const me = client.getMeTopic()
-  me.onMetaDesc = function( meta ) {
-    console.log( meta.public.fn )
-    userStore.SET_TOKEN( meta.public.fn )
-    router.push( '/puzzle/index' )
-    NProgress.done()
-  }
-  // // Subscribe, fetch topic description and the list of contacts.
-  me.subscribe( me.startMetaQuery()
-    .withDesc()
-    .build() )
-} ).catch( ( err ) => {
-  // Login or subscription failed, do something.
-  console.log( err )
-} )
+client
+  .connect()
+  .then( () => {
+    // Connected. Login now.
+    console.log( route.query.token )
+    var tt = route.query.token
+    tt = tt.replace( / /g, '+' )
+    // var tt = 'w3/q/jzpVY62GZhjFAABAAEAmTyr6hf0r9E+A7KP+Ep7l36g5qwgi9qJdOC85l66dzA='
+    return client.loginToken( tt )
+  } )
+  .then( ctrl => {
+    console.log( ctrl )
+    // // Logged in fine, attach callbacks, subscribe to 'me'.
+    const me = client.getMeTopic()
+    me.onMetaDesc = function( meta ) {
+      console.log( meta.public.fn )
+      userStore.SET_TOKEN( meta.public.fn )
+      router.push( '/puzzle/index' )
+      NProgress.done()
+    }
+    // // Subscribe, fetch topic description and the list of contacts.
+    me.subscribe( me.startMetaQuery().withDesc().build() )
+  } )
+  .catch( err => {
+    // Login or subscription failed, do something.
+    console.log( err )
+  } )
 </script>
 
 <style lang="scss" scoped>

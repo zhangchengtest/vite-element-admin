@@ -1,4 +1,4 @@
- <template >
+<template>
   <div class="diffec">
     <div class="difftodo">
       <div class="to" @click="changeDiff('add')"><Time :time="time" ref="headerChild"></Time></div>
@@ -26,8 +26,8 @@
     </h2>
   </div>
   <div class="main">
-  <!-- <BoxCard :ranks="state.myrank" /> -->
-  <TransactionTable :ranks="state.myrank" />
+    <!-- <BoxCard :ranks="state.myrank" /> -->
+    <TransactionTable :ranks="state.myrank" />
   </div>
 </template>
 
@@ -170,7 +170,7 @@ function len( str ) {
 function gameEnd( result ) {
   const target = creatArr( 3 ).toString()
   if ( result === target ) {
-    saveRanks( { 'spendTime' : headerChild.value.seconds, 'step' : cal.value, 'username' : userStore.name, 'url' : url.value } )
+    saveRanks( { spendTime : headerChild.value.seconds, step : cal.value, username : userStore.name, url : url.value } )
     setTimeout( () => {
       endCallback( true )
     }, 100 )
@@ -308,8 +308,8 @@ const refresh = () => {
 .todos {
   display: flex;
   padding-top: 20px;
-   width: 300px;
-   margin: auto;
+  width: 300px;
+  margin: auto;
   justify-content: space-between;
   font-size: 12px;
   .change {

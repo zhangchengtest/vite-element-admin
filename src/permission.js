@@ -12,8 +12,19 @@ router.beforeEach( async( to, from, next ) => {
   const hasToken = cookies.get( TOKEN )
   const userStore = useUserStore()
   const permissionStore = usePermissionStore()
+
+  if ( to.path === '/loginToken' ) {
+    next()
+    NProgress.done()
+    return
+  }
+  if ( to.query.token && to.query.token != '' ) {
+    console.log( to.query.token )
+    next( '/loginToken?token=' + to.query.token )
+    NProgress.done()
+    return
+  }
   if ( hasToken && hasToken !== 'undefined' ) {
-    console.log( 'ssa' )
     if ( to.path === '/login' ) {
       next( { path : '/' } )
       NProgress.done()

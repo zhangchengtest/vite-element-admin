@@ -1,7 +1,7 @@
 <template>
-    <div class="timer">
-        <div ref="startTimer">00:00:00</div>
-    </div>
+  <div class="timer">
+    <div ref="startTimer">00:00:00</div>
+  </div>
 </template>
 
 <script>
@@ -36,7 +36,12 @@ export default {
         this.minutes = 0
         this.hour = this.hour + 1
       }
-      this.$refs.startTimer.innerHTML = ( this.hour < 10 ? '0' + this.hour : this.hour ) + ':' + ( this.minutes < 10 ? '0' + this.minutes : this.minutes ) + ':' + ( this.seconds < 10 ? '0' + this.seconds : this.seconds )
+      this.$refs.startTimer.innerHTML =
+        ( this.hour < 10 ? '0' + this.hour : this.hour ) +
+        ':' +
+        ( this.minutes < 10 ? '0' + this.minutes : this.minutes ) +
+        ':' +
+        ( this.seconds < 10 ? '0' + this.seconds : this.seconds )
       this.cr = this.seconds
     },
     stop() {

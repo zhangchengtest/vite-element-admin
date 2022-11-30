@@ -1,46 +1,43 @@
-
 <template>
   <div>
-                <el-container>
-     <el-header style="text-align: center; font-size: 16px">
-          <div style="margin-top:20px;">Welcome to Puzzle Game !</div>
-     </el-header>
+    <el-container>
+      <el-header style="text-align: center; font-size: 16px">
+        <div style="margin-top: 20px">Welcome to Puzzle Game !</div>
+      </el-header>
 
-     <el-main>
+      <el-main>
         <el-row :gutter="20">
-        <el-col :span="6">
-         <div class="grid-content"></div>
-         </el-col>
+          <el-col :span="6">
+            <div class="grid-content"></div>
+          </el-col>
 
-            <el-col :span="12">
-                <el-input v-model="username" placeholder="用户名"></el-input>
-           </el-col>
-            <el-col :span="6">
-         <div class="grid-content"></div>
-         </el-col>
-       </el-row>
+          <el-col :span="12">
+            <el-input v-model="username" placeholder="用户名"></el-input>
+          </el-col>
+          <el-col :span="6">
+            <div class="grid-content"></div>
+          </el-col>
+        </el-row>
 
-       <div style="margin: 30px 20px;"></div>
-       <el-row :gutter="20">
-        <el-col :span="6">
-         <div class="grid-content"></div>
-         </el-col>
-         <el-col :span="12" style="text-align: center;line-height:40px">
-               <el-button type="primary" @click="login" style="width:100%">进入</el-button>
-           </el-col>
+        <div style="margin: 30px 20px"></div>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <div class="grid-content"></div>
+          </el-col>
+          <el-col :span="12" style="text-align: center; line-height: 40px">
+            <el-button type="primary" @click="login" style="width: 100%">进入</el-button>
+          </el-col>
 
-            <el-col :span="6">
-         <div class="grid-content"></div>
-         </el-col>
-       </el-row>
-
-     </el-main>
-   </el-container>
-           </div>
- </template>
+          <el-col :span="6">
+            <div class="grid-content"></div>
+          </el-col>
+        </el-row>
+      </el-main>
+    </el-container>
+  </div>
+</template>
 
 <script>
-
 import { ref, onBeforeMount, reactive, computed } from 'vue'
 import { useUserStore } from '/@/store'
 
@@ -60,14 +57,10 @@ export default {
       validateCodeToken : '',
       pwd : '',
       username : ''
-
     }
   },
-  components : {
-
-  },
+  components : {},
   methods : {
-
     // 登录逻辑
     login() {
       if ( this.username == '' ) {
@@ -103,12 +96,8 @@ export default {
       this.validateCodeToken = new Date().getTime()
       this.captcha_url = 'api/captchaCode/' + this.validateCodeToken
     }
-
   }
 }
 </script>
 
- <style lang="css" scoped>
-
- </style>
-
+<style lang="css" scoped></style>

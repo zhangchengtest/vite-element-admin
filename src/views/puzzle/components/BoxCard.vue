@@ -1,13 +1,11 @@
 <template>
   <el-card class="box-card-component" style="margin-left: 8px">
-
     <div style="position: relative">
       <TextHover class-name="mallki-text" />
       <div style="padding-top: 15px" class="progress-item" v-for="(item, index) in ranks" :key="item">
-        <span>{{item.username}}</span>
-        <el-progress :percentage="90" :showx="index"/>
+        <span>{{ item.username }}</span>
+        <el-progress :percentage="90" :showx="index" />
       </div>
-
     </div>
   </el-card>
 </template>

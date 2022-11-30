@@ -1,11 +1,8 @@
 <template>
   <div class="navbar" :class="set.layoutMod + '-nav-section'">
-
     <div class="right-menu" :class="{ mobile: set.device === 'mobile' }">
-
       <el-dropdown class="p8 avatar-container right-menu-item" trigger="click">
         <div class="avatar-wrapper">
-
           <div class="username">
             {{ set.userName }}
             <el-icon class="arrow">
@@ -22,7 +19,6 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-
     </div>
   </div>
 </template>

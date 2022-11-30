@@ -1,10 +1,9 @@
 <template>
   <el-table ref="multipleTable" :data="ranks" tooltip-effect="dark" style="width: 100%">
-
     <el-table-column label="排名" max-width="100" align="center">
-      <template #default="scope" >
+      <template #default="scope">
         <el-tag :type="scope.row.statusStr">
-          {{ scope.$index+1 }}
+          {{ scope.$index + 1 }}
         </el-tag>
       </template>
     </el-table-column>

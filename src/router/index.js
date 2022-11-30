@@ -40,6 +40,15 @@ export const constantRoutes = [
     }
   },
   {
+    path : '/loginToken',
+    name : 'LoginToken',
+    component : () => import( '/@/views/login/indexToken.vue' ),
+    meta : {
+      hidden : true,
+      title : '登录'
+    }
+  },
+  {
     path : '/game',
     name : 'Game',
     component : () => import( '/@/views/game/index.vue' ),
@@ -348,7 +357,6 @@ const router = createRouter( {
 
 export function resetRouter() {
   const WHITE_NAME_LIST = ['Login']
-  console.log( 'reset' )
   router.getRoutes().forEach( route => {
     const { name } = route
     if ( name && !WHITE_NAME_LIST.includes( name ) ) {

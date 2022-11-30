@@ -20,7 +20,7 @@ const useUserStore = defineStore( {
     }
   },
   actions : {
-    SET_TOKEN( token = '' ) {
+    SET_TOKEN( token ) {
       token ? cookies.set( TOKEN, token ) : cookies.remove( TOKEN )
       this.token = token
     },

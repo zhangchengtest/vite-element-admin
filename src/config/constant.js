@@ -17,7 +17,7 @@ export const GLOBAL_DATA = {
   },
   pro : {
     chatHost : '13.228.240.187:6060',
-    baseUrl : 'http://api.punengshuo.com/api'
+    baseUrl : 'https://api.punengshuo.com/api'
   }
 }
 

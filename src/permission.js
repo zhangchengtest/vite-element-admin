@@ -53,22 +53,24 @@ router.beforeEach( async( to, from, next ) => {
       next()
     } else {
       // 是否是微信浏览器
-      if ( /(micromessenger)/i.test( navigator.userAgent ) ) {
-        // 是否电脑微信或者微信开发者工具
-        if ( /(WindowsWechat)/i.test( navigator.userAgent ) || /(wechatdevtools)/i.test( navigator.userAgent ) ) {
-          console.log( '电脑微信或者微信开发者工具' )
-          next( '/login' )
-          NProgress.done()
-        } else {
-          // 手机微信打开的浏览器
-          alert( http.getBaseUrl() )
-          NProgress.done()
-        }
-      } else {
-        console.log( '其他浏览器' )
-        next( '/login' )
-        NProgress.done()
-      }
+      next( '/login' )
+      NProgress.done()
+      // if ( /(micromessenger)/i.test( navigator.userAgent ) ) {
+      //   // 是否电脑微信或者微信开发者工具
+      //   if ( /(WindowsWechat)/i.test( navigator.userAgent ) || /(wechatdevtools)/i.test( navigator.userAgent ) ) {
+      //     console.log( '电脑微信或者微信开发者工具' )
+      //     next( '/login' )
+      //     NProgress.done()
+      //   } else {
+      //     // 手机微信打开的浏览器
+      //     alert( http.getBaseUrl() )
+      //     NProgress.done()
+      //   }
+      // } else {
+      //   console.log( '其他浏览器' )
+      //   next( '/login' )
+      //   NProgress.done()
+      // }
     }
   }
 } )

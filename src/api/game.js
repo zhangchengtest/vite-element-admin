@@ -7,11 +7,11 @@ export function queryPuzzle() {
   } )
 }
 
-export function queryPuzzleByUrl( data ) {
+export function queryPuzzleByUrl( url, order_type ) {
   return http.request( {
     url : '/game/queryPuzzleByUrl',
     method : 'get',
-    params : { url : data }
+    params : { url, order_type }
   } )
 }
 

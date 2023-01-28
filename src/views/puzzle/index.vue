@@ -34,15 +34,25 @@
 <script setup>
 import BoxCard from './components/BoxCard'
 import TransactionTable from './components/TransactionTable.vue'
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, watch, ref } from 'vue'
 import NumGame from './components/NumGame.vue'
 import Time from './components/Time.vue'
 import { queryPuzzle, queryPuzzleByUrl, savePuzzleRank, queryPuzzleRank } from '/@/api/game'
 
 import { useUserStore } from '/@/store'
+import { useRoute, useRouter } from 'vue-router'
 const userStore = useUserStore()
+const router = useRouter()
+const route = useRoute()
 
 // userStore.RESET_INFO()
+
+watch( route, ( newValue, oldValue ) => {
+  console.log( 'watch 已触发', newValue, oldValue )
+  // 执行onMounted代码
+  url.value = newValue.query.randomUrl
+  getListByUrl( newValue.query.randomUrl )
+} )
 
 const game = ref()
 const headerChild = ref()
@@ -70,20 +80,11 @@ function creatArr2( level, orders ) {
   return arr
 }
 
-const getList = async() => {
+const toredirect = async() => {
   listLoading.value = true
   const { data } = await queryPuzzle()
 
-  list.value = data.piecces
-  url.value = data.url
-  orders.value = data.orders
-
-  myarr.value = creatArr2( 3, data.orders )
-  getRanks( data.url )
-
-  setTimeout( () => {
-    listLoading.value = false
-  }, 1.5 * 1000 )
+  router.push( '/puzzle/index?randomUrl=' + data.url )
 }
 
 const getRanks = async url => {
@@ -102,9 +103,21 @@ const saveRanks = async data => {
   getRanks( url.value )
 }
 
+const getListByUrlRandom = async url => {
+  listLoading.value = true
+  const { data } = await queryPuzzleByUrl( url, 'random' )
+
+  list.value = data.piecces
+  orders.value = data.orders
+
+  myarr.value = creatArr2( 3, data.orders )
+  setTimeout( () => {
+    listLoading.value = false
+  }, 1.5 * 1000 )
+}
 const getListByUrl = async url => {
   listLoading.value = true
-  const { data } = await queryPuzzleByUrl( url )
+  const { data } = await queryPuzzleByUrl( url, 'normal' )
 
   list.value = data.piecces
   orders.value = data.orders
@@ -115,7 +128,13 @@ const getListByUrl = async url => {
   }, 1.5 * 1000 )
 }
 
-getList()
+url.value = route.query.randomUrl
+console.log( url.value )
+if ( !route.query.randomUrl ) {
+  toredirect()
+} else {
+  getListByUrl( url.value )
+}
 
 var img1 = 'http://st.punengshuo.com/images/output1.png'
 var img2 = 'http://st.punengshuo.com/images/output2.png'
@@ -247,12 +266,12 @@ const state = reactive( {
 
 const start = () => {
   isStart.value = true
-  getListByUrl( url.value )
+  getListByUrlRandom( url.value )
   headerChild.value.start()
 }
 
 const refresh = () => {
-  location.reload()
+  toredirect()
 }
 </script>
 

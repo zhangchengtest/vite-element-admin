@@ -4,6 +4,7 @@ import { TOKEN } from '/@/config/constant'
 import getPageTitle from '/@/utils/getPageTitle'
 import { useUserStore, usePermissionStore } from '/@/store'
 import NProgress from '/@/utils/progress'
+import http from '/@/utils/request'
 
 const whiteList = ['/login']
 router.beforeEach( async( to, from, next ) => {
@@ -51,8 +52,23 @@ router.beforeEach( async( to, from, next ) => {
     if ( whiteList.indexOf( to.path ) !== -1 ) {
       next()
     } else {
-      next( '/login' )
-      NProgress.done()
+      // 是否是微信浏览器
+      if ( /(micromessenger)/i.test( navigator.userAgent ) ) {
+        // 是否电脑微信或者微信开发者工具
+        if ( /(WindowsWechat)/i.test( navigator.userAgent ) || /(wechatdevtools)/i.test( navigator.userAgent ) ) {
+          console.log( '电脑微信或者微信开发者工具' )
+          next( '/login' )
+          NProgress.done()
+        } else {
+          // 手机微信打开的浏览器
+          alert( http.getBaseUrl() )
+          NProgress.done()
+        }
+      } else {
+        console.log( '其他浏览器' )
+        next( '/login' )
+        NProgress.done()
+      }
     }
   }
 } )

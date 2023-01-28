@@ -25,9 +25,14 @@ router.beforeEach( async( to, from, next ) => {
     NProgress.done()
     return
   }
+  if ( to.path === '/loginGinToken' ) {
+    next()
+    NProgress.done()
+    return
+  }
   if ( to.query.ginToken && to.query.ginToken != '' ) {
     console.log( to.query.ginToken )
-    next( '/loginToken?ginToken=' + to.query.ginToken + '&randomUrl=' + to.query.randomUrl )
+    next( '/loginGinToken?ginToken=' + to.query.ginToken + '&randomUrl=' + to.query.randomUrl )
     NProgress.done()
     return
   }

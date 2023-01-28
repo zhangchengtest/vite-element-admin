@@ -123,6 +123,7 @@ const getListByUrl = async url => {
   orders.value = data.orders
 
   myarr.value = creatArr2( 3, data.orders )
+  getRanks( url )
   setTimeout( () => {
     listLoading.value = false
   }, 1.5 * 1000 )

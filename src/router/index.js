@@ -49,6 +49,15 @@ export const constantRoutes = [
     }
   },
   {
+    path : '/loginGinToken',
+    name : 'LoginGinToken',
+    component : () => import( '/@/views/login/indexGinToken.vue' ),
+    meta : {
+      hidden : true,
+      title : '登录'
+    }
+  },
+  {
     path : '/game',
     name : 'Game',
     component : () => import( '/@/views/game/index.vue' ),

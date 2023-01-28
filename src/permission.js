@@ -25,6 +25,12 @@ router.beforeEach( async( to, from, next ) => {
     NProgress.done()
     return
   }
+  if ( to.query.gintoken && to.query.gintoken != '' ) {
+    console.log( to.query.gintoken )
+    next( '/loginToken?gintoken=' + to.query.gintoken )
+    NProgress.done()
+    return
+  }
   if ( hasToken && hasToken !== 'undefined' ) {
     if ( to.path === '/login' ) {
       next( { path : '/' } )

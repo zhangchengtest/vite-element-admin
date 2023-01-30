@@ -17,8 +17,7 @@ export default {
       timer : '',
       hour : 0,
       minutes : 0,
-      seconds : 0,
-      cr : ''
+      seconds : 0
     }
   },
   created() {
@@ -48,6 +47,10 @@ export default {
       clearInterval( this.timer )
     },
     start() {
+      clearInterval( this.timer )
+      this.hour = 0
+      this.minutes = 0
+      this.seconds = 0
       this.timer = setInterval( this.startTimer, 1000 )
     }
   }

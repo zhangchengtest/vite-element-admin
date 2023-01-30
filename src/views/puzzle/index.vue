@@ -1,7 +1,8 @@
 <template>
+  <div>
   <div class="diffec">
     <div class="difftodo">
-      <div class="to" @click="changeDiff('add')"><Time :time="time" ref="headerChild"></Time></div>
+      <div class="to" @click="changeDiff('add')"><Time  ref="headerChild"></Time></div>
       <div class="to" @click="changeDiff('del')">步数：{{ cal }}</div>
     </div>
   </div>
@@ -17,8 +18,8 @@
   </div>
 
   <div class="todos">
-    <div class="change" @click="refresh">刷新</div>
-    <div class="start" @click="start">{{ state.btnName }}</div>
+    <div class="change" @click="refresh">换图</div>
+    <div class="start" @click="start" v-show="state.showStart">{{ state.btnName }}</div>
   </div>
   <div class="diffec">
     <h2>
@@ -29,6 +30,7 @@
     <!-- <BoxCard :ranks="state.myrank" /> -->
     <TransactionTable :ranks="state.myrank" />
   </div>
+</div>
 </template>
 
 <script setup>
@@ -160,6 +162,7 @@ const endCallback = () => {
   // 通关了
   state.msg = '欧耶!我过关了'
   headerChild.value.stop()
+  state.showStart = true
 }
 
 const shouldMoveCallback = () => {
@@ -216,6 +219,7 @@ function creatArr( level ) {
 const state = reactive( {
   btnName : '开始游戏',
   msg : '',
+  showStart : true,
   myrank : computed( () => {
     const statusMap = {
       1 : 'danger',
@@ -266,9 +270,11 @@ const state = reactive( {
 } )
 
 const start = () => {
+  headerChild.value.start()
   isStart.value = true
   getListByUrlRandom( url.value )
-  headerChild.value.start()
+  cal.value = 0
+  state.showStart = false
 }
 
 const refresh = () => {

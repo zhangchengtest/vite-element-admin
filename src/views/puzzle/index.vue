@@ -274,10 +274,12 @@ const start = () => {
   isStart.value = true
   getListByUrlRandom( url.value )
   cal.value = 0
+  state.msg = ''
   state.showStart = false
 }
 
 const refresh = () => {
+  state.msg = ''
   toredirect()
 }
 </script>

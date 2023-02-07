@@ -46,6 +46,14 @@ export default {
     stop() {
       clearInterval( this.timer )
     },
+    clear() {
+      clearInterval( this.timer )
+      console.log( 'time clear' )
+      this.hour = 0
+      this.minutes = 0
+      this.seconds = 0
+      this.$refs.startTimer.innerHTML = '00:00:00'
+    },
     start() {
       clearInterval( this.timer )
       this.hour = 0

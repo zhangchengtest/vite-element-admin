@@ -1,36 +1,36 @@
 <template>
   <div>
-  <div class="diffec">
-    <div class="difftodo">
-      <div class="to" @click="changeDiff('add')"><Time  ref="headerChild"></Time></div>
-      <div class="to" @click="changeDiff('del')">步数：{{ cal }}</div>
+    <div class="diffec">
+      <div class="difftodo">
+        <div class="to" @click="changeDiff('add')"><Time ref="headerChild"></Time></div>
+        <div class="to" @click="changeDiff('del')">步数：{{ cal }}</div>
+      </div>
+    </div>
+    <div class="main">
+      <!-- 游戏 -->
+      <num-game
+        :gamedata="state.gamedata"
+        :gameArr="state.arrdata"
+        ref="game"
+        @endCallback="endCallback"
+        @shouldMoveCallback="shouldMoveCallback"
+      ></num-game>
+    </div>
+
+    <div class="todos">
+      <div class="change" @click="refresh">换图</div>
+      <div class="start" @click="start" v-show="state.showStart">{{ state.btnName }}</div>
+    </div>
+    <div class="diffec">
+      <h2>
+        <p class="tip">{{ state.msg }}</p>
+      </h2>
+    </div>
+    <div class="main">
+      <!-- <BoxCard :ranks="state.myrank" /> -->
+      <TransactionTable :ranks="state.myrank" />
     </div>
   </div>
-  <div class="main">
-    <!-- 游戏 -->
-    <num-game
-      :gamedata="state.gamedata"
-      :gameArr="state.arrdata"
-      ref="game"
-      @endCallback="endCallback"
-      @shouldMoveCallback="shouldMoveCallback"
-    ></num-game>
-  </div>
-
-  <div class="todos">
-    <div class="change" @click="refresh">换图</div>
-    <div class="start" @click="start" v-show="state.showStart">{{ state.btnName }}</div>
-  </div>
-  <div class="diffec">
-    <h2>
-      <p class="tip">{{ state.msg }}</p>
-    </h2>
-  </div>
-  <div class="main">
-    <!-- <BoxCard :ranks="state.myrank" /> -->
-    <TransactionTable :ranks="state.myrank" />
-  </div>
-</div>
 </template>
 
 <script setup>
@@ -193,7 +193,8 @@ function len( str ) {
 function gameEnd( result ) {
   const target = creatArr( 3 ).toString()
   if ( result === target ) {
-    saveRanks( { spendTime : headerChild.value.seconds, step : cal.value, username : userStore.name, url : url.value } )
+    var dd = headerChild.value.minutes * 60 + headerChild.value.seconds
+    saveRanks( { spendTime : dd, step : cal.value, username : userStore.name, url : url.value } )
     setTimeout( () => {
       endCallback( true )
     }, 100 )
@@ -279,7 +280,11 @@ const start = () => {
 }
 
 const refresh = () => {
+  cal.value = 0
   state.msg = ''
+  state.showStart = true
+  isStart.value = false
+  headerChild.value.clear()
   toredirect()
 }
 </script>
